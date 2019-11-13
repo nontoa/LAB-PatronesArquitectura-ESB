@@ -27,7 +27,7 @@ public class App
     public void run(){    
         CamelContext context = new DefaultCamelContext();
         //String brokerURL = args[0];
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616?jms.useAsyncSend=true");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://54.166.174.186:61616?jms.useAsyncSend=true");
         try {
                 // Create a Connection
                 Connection connection = connectionFactory.createConnection("smx","smx");
@@ -37,7 +37,7 @@ public class App
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
  
                 // Create the destination (Topic or Queue)
-                Destination destination = session.createQueue("events");
+                Destination destination = session.createQueue("test.foo");
  
                 // Create a MessageProducer from the Session to the Topic or Queue
                 MessageProducer producer = session.createProducer(destination);

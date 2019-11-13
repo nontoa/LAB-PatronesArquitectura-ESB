@@ -6,6 +6,7 @@
 package edu.escuelaing.arep;
 
 import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
@@ -31,10 +32,10 @@ public class Consumer implements Runnable, ExceptionListener {
         try {
 
             // Create a ConnectionFactory
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost");
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://54.166.174.186:61616?jms.useAsyncSend=true");
 
             // Create a Connection
-            Connection connection = connectionFactory.createConnection();
+            Connection connection = connectionFactory.createConnection("smx","smx");
             connection.start();
 
             connection.setExceptionListener(this);
@@ -43,7 +44,7 @@ public class Consumer implements Runnable, ExceptionListener {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue("TEST.FOO");
+            Destination destination = session.createQueue("test.foo");
 
             // Create a MessageConsumer from the Session to the Topic or Queue
             MessageConsumer consumer = session.createConsumer(destination);
